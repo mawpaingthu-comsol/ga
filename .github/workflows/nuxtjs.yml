@@ -99,6 +99,16 @@ jobs:
     # Steps represent a sequence of tasks
     # that will be executed as part of the job
     steps:
+      - name: Checkout
+          uses: actions/checkout@v4
+          with:
+
+            # Fetch all history for all tags and branches
+            fetch-depth: 0
+
+            # Checkout a specific branch
+            ref: main
+
       - name: SFTP-Deploy-Action
         uses: milanmk/actions-file-deployer@master
         with:
