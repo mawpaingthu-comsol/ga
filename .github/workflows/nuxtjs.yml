@@ -89,29 +89,16 @@ jobs:
     #     id: deployment
     #     uses: actions/deploy-pages@v4
 
-    SFTP-Deploy-Action:
-    name: SFTP-Deploy-Action
-
+    environment:
+      name: SFTP-Deploy-Action
+      url: "https://yagocoro.vagrant"
     # The type of runner that the job will run on
     # (depends on server but usually this value is works)
     runs-on: ubuntu-latest
-
+    needs: build
     # Steps represent a sequence of tasks
     # that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE,
-      # so your job can access it
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          # Fetch all history for all tags and branches
-          fetch-depth: 0
-
-          # Checkout a specific branch
-          ref: test-branch
-
-      # This is a composite GitHub Action (Linux runner)
-      # for deploying repository content to remote server
       - name: SFTP-Deploy-Action
         uses: milanmk/actions-file-deployer@master
         with:
