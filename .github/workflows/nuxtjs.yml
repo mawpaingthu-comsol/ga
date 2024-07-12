@@ -73,7 +73,7 @@ jobs:
       - name: Static HTML export with Nuxt
         run: ${{ steps.detect-package-manager.outputs.manager }} run generate
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./dist
 
@@ -97,7 +97,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Download a single artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: artifact
       - name: ssh deploy
@@ -108,4 +108,4 @@ jobs:
           remote-user: ${{ secrets.USERNAME }}
           remote-password: ${{ secrets.PASSWORD }}
           remote-path: "/var/www/html"
-          local-path: "artifact/"
+          local-path: "."
