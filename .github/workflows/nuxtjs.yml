@@ -95,7 +95,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: deploy file
-        uses: ./
+        uses: ./dist
         with:
           username: ${{ secrets.USERNAME }}
           server: ${{ secrets.HOST }}
