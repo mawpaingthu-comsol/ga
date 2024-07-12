@@ -75,6 +75,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
+          name: dist
           path: ./dist
 
   # Deployment job
@@ -104,4 +105,4 @@ jobs:
           remote-user: ${{ secrets.USERNAME }}
           remote-password: ${{ secrets.PASSWORD }}
           remote-path: "/var/www/html"
-          local-path: "/home/runner"
+          local-path: "dist"
