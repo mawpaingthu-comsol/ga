@@ -31,8 +31,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - name: Detect package manager
         id: detect-package-manager
         run: |
@@ -83,40 +81,36 @@ jobs:
           remote-password: ${{ secrets.PASSWORD }}
           remote-path: "/var/www/html"
           local-path: "./dist"
-      # - name: Upload artifact
-      #   uses: actions/upload-pages-artifact@v3
-      #   with:
-      #     path: ./dist
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
 
-  # # Deployment job
-  # deploy:
-  #   # environment:
-  #   #   name: github-pages
-  #   #   url: ${{ steps.deployment.outputs.page_url }}
-  #   # runs-on: ubuntu-latest
-  #   # needs: build
-  #   # steps:
-  #   #   - name: Deploy to GitHub Pages
-  #   #     id: deployment
-  #   #     uses: actions/deploy-pages@v4
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   name: deploy
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0
-  #     - name: Download a single artifact
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: artifact
-  #     - name: ssh deploy
-  #       uses: milanmk/actions-file-deployer@master
-  #       with:
-  #         remote-protocol: "sftp"
-  #         remote-host: ${{ secrets.HOST }}
-  #         remote-user: ${{ secrets.USERNAME }}
-  #         remote-password: ${{ secrets.PASSWORD }}
-  #         remote-path: "/var/www/html"
-  #         local-path: "."
+  # Deployment job
+  deploy:
+    # environment:
+    #   name: github-pages
+    #   url: ${{ steps.deployment.outputs.page_url }}
+    # runs-on: ubuntu-latest
+    # needs: build
+    # steps:
+    #   - name: Deploy to GitHub Pages
+    #     id: deployment
+    #     uses: actions/deploy-pages@v4
+    runs-on: ubuntu-latest
+    needs: build
+    name: deploy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: ssh deploy
+        uses: milanmk/actions-file-deployer@master
+        with:
+          remote-protocol: "sftp"
+          remote-host: ${{ secrets.HOST }}
+          remote-user: ${{ secrets.USERNAME }}
+          remote-password: ${{ secrets.PASSWORD }}
+          remote-path: "/var/www/html"
+          local-path: "~/transfer_files"
