@@ -95,12 +95,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: ssh deploy
-        uses: easingthemes/ssh-deploy@v5.0.3
+        uses: milanmk/actions-file-deployer@master
         with:
-          PASSWORD: ${{ secrets.PASSWORD }}
-          ARGS: "-rlgoDzvc -i --delete"
-          SOURCE: "dist/"
-          REMOTE_HOST: ${{ secrets.HOST }}
-          REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: "/var/www/html"
-          EXCLUDE: "/dist/, /node_modules/"
+          remote-protocol: "sftp"
+          remote-host: ${{ secrets.HOST }}
+          remote-user: ${{ secrets.USERNAME }}
+          remote-password: ${{ secrets.PASSWORD }}
+          remote-path: "/var/www/html"
+          local-path: "./dist"
