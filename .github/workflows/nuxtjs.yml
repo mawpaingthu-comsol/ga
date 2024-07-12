@@ -88,39 +88,12 @@ jobs:
     #   - name: Deploy to GitHub Pages
     #     id: deployment
     #     uses: actions/deploy-pages@v4
-
-    environment:
-      name: SFTP-Deploy-Action
-      url: "https://yagocoro.vagrant"
-    # The type of runner that the job will run on
-    # (depends on server but usually this value is works)
-    runs-on: ubuntu-latest
-    needs: build
-    # Steps represent a sequence of tasks
-    # that will be executed as part of the job
-    steps:
-      - name: Checkout
-          uses: actions/checkout@v4
-          with:
-
-            # Fetch all history for all tags and branches
-            fetch-depth: 0
-
-            # Checkout a specific branch
-            ref: main
-
-      - name: SFTP-Deploy-Action
-        uses: milanmk/actions-file-deployer@master
+    - name: deploy file to server
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
-          remote-protocol: sftp
-
-          # Credentials for SFTP access to server using GitHub secrets
-          remote-host: ${{ secrets.HOST }}
-          remote-user: ${{ secrets.USERNAME }}
-          remote-password: ${{ secrets.PASSWORD }}
-
-          # Path for specific folder on server for files deployment
-          remote-path: /var/www/html
-
-          # Port for SFTP access to server
-          remote-port: 22
+            username: '${{ secrets.USERNAME }}'
+            server: '${{ secrets.HOST }}'
+            ssh_password: ${{ secrets.PASSWORD }}
+            local_path: './dist/*'
+            remote_path: '/var/www/html'
+            sftpArgs: '-o ConnectTimeout=5'
